@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- 
+	Copyright 2011 - Vito Tafuni
+	This file is part of JSOTTEST.
+
+    JSOTTEST is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    JSOTTEST is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with JSOTTEST.  If not, see <http://www.gnu.org/licenses/>.
+	-->
+	<title>JavaScript Operational Transformation algorithm TEST page</title>
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+	<script type="text/javascript">
+		// some corrections for dependencies from mootools in JSON.js  
+		function Hash(){};
+		function typeOf(value) {
+			var s = typeof value;
+			if (s === 'object') {
+				if (value) {
+				    if (typeof value.length === 'number' &&
+				            !(value.propertyIsEnumerable('length')) &&
+				            typeof value.splice === 'function') {
+				        s = 'array';
+				    }
+				} else {
+				    s = 'null';
+				}
+			}
+			return s;
+		}
+		
+		Object.prototype.each = function(el,fn){
+			for (var k in el)
+				if(el.hasOwnProperty(k))
+					fn(el[k],k);
+		}
+		
+		Array.prototype.clean = function(){
+			var those = new Array();
+			for(var i=0; i<this.length; i++)
+				if(this[i]!=null && this[i]!=undefined)
+					those[those.length] = this[i];
+			
+			return those;
+		}
+		
+		// IE is the worste browser
+		if(!Array.prototype.map)
+		Array.prototype.map = function(fn, scope){
+			scope = scope || window;
+			var r = [];
+			for(var i = 0; i < this.length; i++)
+				r[r.length] = fn.call(scope, this[i], i, this);
+			return r;
+		};
+		
+		// avoid error if browser doesn't have console.log
+		if(!window.console) console = {log:function(){}};
+		
+	</script>
+	<script type="text/javascript" src="JSON.js"></script>
+	<script type="text/javascript" src="myOT.js"></script>
+	<script type="text/javascript" src="cases.js"></script>
+	<script type="text/javascript" src="cases.execution.js"></script>
+	<script type="text/javascript" src="ui.js"></script>
+</head>
+<body>
+<div class="case_params">
+	<div class="buttons">
+		switch case:
+		<select id="cases">
+		</select>
+		<input type="button" value="Add random case" onclick="javascript: toggleRandomCaseParams()">
+		<input type="button" value="Add blank case" onclick="javascript: addBlankCase()">
+		<input type="button" value="Add blank user" onclick="javascript: addBlankUser()">
+		<input type="button" value="Execute case" onclick="javascript: executeCase(document.getElementById('cases').value)">
+		<input type="checkbox" onclick="javascript: log_op = this.checked? log_on:log_off" style="border:none;"/>Enable Log
+		<div id="random_case"> 
+			<label for="ops">operations number<input type="text" id="nops"/></label>
+			<label for="users">users number<input type="text" id="nusers"/></label><br/>
+			<label for="pinsert">insert percentage<input type="text" id="pinsert"/></label>
+			<label for="pdelete">delete percentage<input type="text" id="pdelete"/></label><br/>
+			<input type="button" value="Add case" onclick="javascript: addRandomCase()"/>
+		</div>
+	</div>
+
+	<div>
+		<label class="ops_list" for="ops_list">ops list:<br/><textarea id='ops_list'></textarea></label>
+		<label for="init_text">initial text: <br/><textarea id='init_text'></textarea></label><br/>
+		<label for="exp_text">expected text: <br/><textarea id='exp_text' onchange="javascript: document.getElementById('recheck').style.display='block'"></textarea></label><br/>
+		<input id="recheck" type="button" value="re-check" onclick="javascript: recheck(); this.style.display='none'"/><br/>
+		<label id="gen_time_info">generation time:<input class="time" id="gen_time" type="text"/></label>
+		<label id="corr_exec_info">correct executions:<input class="time" id="corr_exec" type="text"/></label>
+		<label id="avg_time_info">average exec time:<input class="time" id="avg_time" type="text"/></label>
+	</div>
+</div>
+<div id="users">
+</div>
+<script type="text/javascript"> uiComplete() </script>
+</body>
+</html>

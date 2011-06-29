@@ -1,0 +1,22 @@
+body {font:14px/16px "Verdana",sans;}
+.user {width:200px; float:left; margin-right:10px; margin-top:60px;}
+.case_params {width:650px;float:left; overflow:visible;}
+.buttons {margin-bottom:20px; width:150%;}
+.ops_list {float:left;margin-right:10px;}
+.ops_list textarea {width:400px; height:300px;font:11px/16px mono;}
+
+input, textarea, select {border:1px solid #999;background-color:#fff; padding:2px;}
+textarea,input,hr {margin-top:3px; margin-bottom:15px;}
+hr {border:0;border-top:2px solid #999; margin-bottom:10px;}
+.time { border:0; width:70px; font:inherit}
+
+.yes {border-color:#00ff00;}
+.no {border-color:#ff0000;}
+.maybe {border-color:#0000ff;}
+
+#random_case {display:none; border:3px solid #999; width:500px;margin:0;height:110px;padding:10px;}
+#random_case label {width:200px;display:block; float:left; }
+#gen_time_info, 
+#avg_time_info, 
+#corr_exec_info, 
+#recheck {display:none;}
