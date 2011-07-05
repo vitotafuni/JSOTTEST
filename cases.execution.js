@@ -75,7 +75,7 @@ function executeCase(cid){
 	}
 
 	// statistic of corrected case		
-	var corr=0;
+	var corr=1;
 	for( var uid=0; uid<rcv.length; uid++)
 		if(rt[uid].className=='no'){
 			for (var uid2=uid; uid2<rcv.length; uid2++)
@@ -104,6 +104,8 @@ function recheck(){
 	var u=cases[document.getElementById('cases').value].rcv.length;
 	var rt=[];
 	
+	var corr=1;
+	
 	for( var uid=0; uid<u; uid++){
 		if(!rt[uid])
 			rt[uid] = document.getElementById('text'+uid);
@@ -118,7 +120,11 @@ function recheck(){
 				if(rt[uid].innerHTML==rt[uid2].innerHTML)
 					rt[uid].className=rt[uid2].className='maybe';
 			}
+		else
+			corr++
 	}
+	
+	document.getElementById('corr_exec').value = corr+"/"+uid;
 }
 
 /*
